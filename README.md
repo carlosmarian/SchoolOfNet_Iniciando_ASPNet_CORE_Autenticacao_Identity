@@ -56,7 +56,7 @@ dotnet aspnet-codegenerator identity --listFiles
 
 Para criar um arquivo, deve:
 
-dotnet aspnet-codegenerator identity -dc <Arquivo de contexto da aplicação> --files <Arquivos que desejo gerar>
+dotnet aspnet-codegenerator identity -dc < Arquivo de contexto da aplicação > --files < Arquivos que desejo gerar >
 
 ```
 dotnet aspnet-codegenerator identity -dc NetCOREAutenticacaoIdentity.Data.ApplicationDbContext --files Account.Register
