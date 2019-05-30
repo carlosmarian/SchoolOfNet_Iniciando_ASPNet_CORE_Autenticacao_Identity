@@ -35,3 +35,31 @@ OBS: A aplicação não deve estar rodando para executar este comando.
 |AspNetUsers| Tabela de usuários|
 |AspNetUserClaims|Campos personalisados do usuário|
 
+
+Para alterar a interface das telas do Identity, deve usado o code-Generator:
+```
+dotnet tool install -g dotnet-aspnet-codegenerator
+```
+Adicionar o Pacote "CodeGeneration.Design" ao projeto:
+```
+ dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+```
+OBS: Por garantia executar um restore dos pacotes:
+```
+dotnet restore
+```
+
+Listar os arquivos que podem ser gerados para o Identity:
+```
+dotnet aspnet-codegenerator identity --listFiles
+```
+
+Para criar um arquivo, deve:
+
+dotnet aspnet-codegenerator identity -dc <Arquivo de contexto da aplicação> --files <Arquivos que desejo gerar>
+
+```
+dotnet aspnet-codegenerator identity -dc NetCOREAutenticacaoIdentity.Data.ApplicationDbContext --files Account.Register
+```
+Os arquivos serão gerados em:  .\Areas\Identity\Pages\Account
+
