@@ -21,6 +21,7 @@ dotnet ef database update
 OBS: A aplicação não deve estar rodando para executar este comando.
 
 #Algumas tabelas que são criadas:
+
 | Nome| Descrição|
 |-----|----------|
 |AspNetUsers| Tabela de usuários|
