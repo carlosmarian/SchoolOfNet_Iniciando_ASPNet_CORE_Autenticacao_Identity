@@ -71,3 +71,21 @@ Adicionar a pagina de Login
 ```
 dotnet aspnet-codegenerator identity -dc NetCOREAutenticacaoIdentity.Data.ApplicationDbContext --files Account.Login
 ```
+
+Para cliar claims usando MySQL deve ser efetuado um ajuste na migração para evitar erros.
+
+Isso ocorre pq a migração usa um comando válido só para SQLServer
+
+Para isso tem que remover todas as migrações e as tabelas no banco.
+
+Depois criar novamente as migrações
+```
+dotnet ef migrations add CreateIdentitySchema
+```
+Agora as migraçõe serão criadas corretamente.
+
+Depois é só executar a migração.
+```
+dotnet ef database update
+```
+

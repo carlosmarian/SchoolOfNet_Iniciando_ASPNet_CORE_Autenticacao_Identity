@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
+//using autenticacao.Data;
+using System.Linq;
 
 namespace NetCOREAutenticacaoIdentity.Areas.Identity.Pages.Account
 {
@@ -57,6 +60,9 @@ namespace NetCOREAutenticacaoIdentity.Areas.Identity.Pages.Account
 
             [Display(Name = "Nome competo")]
             public string NomeCompleto { get; set; }
+
+            [Display(Name = "Idade")]
+            public int Idade { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -78,6 +84,12 @@ namespace NetCOREAutenticacaoIdentity.Areas.Identity.Pages.Account
                 {
                     
                     _logger.LogInformation("User created a new account with password.");
+
+                    //Adicionar as Claims
+                    await _userManager.AddClaimAsync(user, new Claim("NomeCompleto", Input.NomeCompleto));
+                    await _userManager.AddClaimAsync(user, new Claim("Idade", Input.Idade.ToString()));
+
+                    //Para Mysql deve ser efetuado um ajuste devido a BUG.
 
                     //Se teve sucesso
                     //Faz envio da confirmação de emai;
