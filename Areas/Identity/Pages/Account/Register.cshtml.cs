@@ -45,15 +45,18 @@ namespace NetCOREAutenticacaoIdentity.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "A {0} deve ter no mínimo {2} caracteres e no maximo {1} char.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Senha")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Contra senha")]
+            [Compare("Password", ErrorMessage = "A contra senha não é igual a senha.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Nome competo")]
+            public string NomeCompleto { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -64,14 +67,20 @@ namespace NetCOREAutenticacaoIdentity.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
+            //Valida so dados do fomulário baseado nas anotations e tipos de dados;
             if (ModelState.IsValid)
             {
+                //Cria um Usuário
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                //Grava no banco o usuário
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    
                     _logger.LogInformation("User created a new account with password.");
 
+                    //Se teve sucesso
+                    //Faz envio da confirmação de emai;
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
@@ -82,6 +91,7 @@ namespace NetCOREAutenticacaoIdentity.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                    //faz o login
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }

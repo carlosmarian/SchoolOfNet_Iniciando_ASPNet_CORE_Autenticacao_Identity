@@ -63,3 +63,5 @@ dotnet aspnet-codegenerator identity -dc NetCOREAutenticacaoIdentity.Data.Applic
 ```
 Os arquivos serão gerados em:  .\Areas\Identity\Pages\Account
 
+
+Para ajustar uma informação em um formulário do Identity deve ser alterado o InputModel pa página, adicionado novos atributos ou editando validações ou labels de campo.
